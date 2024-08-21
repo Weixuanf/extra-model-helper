@@ -20,6 +20,9 @@ def load_extra_path_config(yaml_path):
         base_path = None
         if "base_path" in conf:
             base_path = conf.pop("base_path")
+            if not os.path.exists(base_path):
+                logging.warning(f"Extra model paths base path not found: {base_path}")
+                continue
             # list all direct folder child of base_path
             for folder in os.listdir(base_path):
                 full_path = os.path.join(base_path, folder)
