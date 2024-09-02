@@ -21,7 +21,9 @@ def load_extra_path_config(yaml_path):
             base_path = conf.pop("base_path")
             if not os.path.exists(base_path):
                 logging.warning(f"Extra model paths base path not found: {base_path}, creating one...")
-                shutil.os.makedirs(base_path, exist_ok=True)
+                parent_dir = os.path.dirname(base_path)
+                if os.path.exists('runpod-volume') or os.path.exists(parent_dir):
+                    shutil.os.makedirs(base_path, exist_ok=True)
             # list all direct folder child of base_path
             for folder in os.listdir(base_path):
                 full_path = os.path.join(base_path, folder)
